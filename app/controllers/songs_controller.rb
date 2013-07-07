@@ -1,4 +1,8 @@
 class SongsController < ApplicationController
+  before_filter :get_artist
+  def get_artist
+    @artist = Artist.find(params[:artist_id])
+  end
   # GET /songs
   # GET /songs.json
   def index
@@ -42,11 +46,15 @@ class SongsController < ApplicationController
   # POST /songs
   # POST /songs.json
   def create
+    # Hack? How to do this better...
+    params[:song][:genre] = Genre.find(params[:song][:genre_id])
+    params[:song].delete(:genre_id)
+    params[:song][:artist] = @artist
     @song = Song.new(params[:song])
 
     respond_to do |format|
       if @song.save
-        format.html { redirect_to @song, notice: 'Song was successfully created.' }
+        format.html { redirect_to [@artist, @song], notice: 'Song was successfully created.' }
         format.json { render json: @song, status: :created, location: @song }
       else
         format.html { render action: "new" }
@@ -59,10 +67,13 @@ class SongsController < ApplicationController
   # PUT /songs/1.json
   def update
     @song = Song.find(params[:id])
+    # Hack? How to do this better...
+    params[:song][:genre] = Genre.find(params[:song][:genre_id])
+    params[:song].delete(:genre_id)
 
     respond_to do |format|
       if @song.update_attributes(params[:song])
-        format.html { redirect_to @song, notice: 'Song was successfully updated.' }
+        format.html { redirect_to [@artist, @song], notice: 'Song was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

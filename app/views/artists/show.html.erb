@@ -5,17 +5,9 @@
   <%= @artist.name %>
 </p>
 
-<% if not @artist.songs.empty? %>
-
-<ul>
-
-  <% @artist.songs.each do |song| %>
-  <li><%= link_to song.name, artist_song_path(song.artist, song) %> (<%= link_to song.genre.name, genre_path(song.genre) %>)</li>
-  <% end %>
-
-</ul>
-
-<% end %>
+<p>
+  <b><%= link_to 'Songs', artist_songs_path(@artist) %></b>
+</p>
 
 
 <%= link_to 'Edit', edit_artist_path(@artist) %> |

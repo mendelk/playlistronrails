@@ -2,7 +2,7 @@ class ArtistsController < ApplicationController
   # GET /artists
   # GET /artists.json
   def index
-    @artists = Artist.all
+    @artists = Artist.all.sort{|a,b| a.name.downcase <=> b.name.downcase}
 
     respond_to do |format|
       format.html # index.html.erb

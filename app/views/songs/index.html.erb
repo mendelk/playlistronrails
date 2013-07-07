@@ -1,19 +1,26 @@
-<h1>Listing songs</h1>
+<h1><%= @artist.name %>'s Songs</h1>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<% if not @artist.songs.empty? %>
 
-<% @songs.each do |song| %>
-  <tr>
-    <td><%= song.name %></td>
-    <td><%= link_to 'Show', [song.artist, song] %></td>
-    <td><%= link_to 'Edit', edit_artist_song_path(song.artist, song) %></td>
-    <td><%= link_to 'Destroy', [song.artist, song], method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Genre</th>
+      <th></th>
+      <th></th>
+    </tr>
+
+  <% @songs.each do |song| %>
+    <tr>
+      <td><%= link_to song.name, [song.artist, song] %></td>
+      <td>(<%= link_to song.genre.name, genre_path(song.genre) %>)</td>
+      <td><%= link_to 'Edit', edit_artist_song_path(song.artist, song) %></td>
+      <td><%= link_to 'Destroy', [song.artist, song], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+  </table>
+
 <% end %>
-</table>
+
+<p><%= link_to 'Add Song', new_artist_song_path(@artist) %></p>
+
