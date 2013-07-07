@@ -15,4 +15,8 @@
   <%= link_to @song.genre.name, genre_path(@song.genre) %>
 </p>
 
+<p>
+  <iframe src="http://www.youtube.com/embed/<%= @yt_id %>" width=640 height=480 frameborder=0></iframe>
+</p>
+
 <%= link_to 'Edit', edit_artist_song_path(@song) %>

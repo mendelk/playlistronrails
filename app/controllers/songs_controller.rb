@@ -3,7 +3,6 @@ class SongsController < ApplicationController
   # GET /songs.json
   def index
     # @songs = Song.find_by_artist_id params[:artist_id]
-    @artist = Artist.find params[:artist_id]
     @songs = Song.find_all_by_artist_id params[:artist_id]
 
     respond_to do |format|
@@ -16,6 +15,7 @@ class SongsController < ApplicationController
   # GET /songs/1.json
   def show
     @song = Song.find(params[:id])
+    @yt_id = YoutubeSearch.search("#{@song.name} #{@song.artist.name}").first['video_id']
 
     respond_to do |format|
       format.html # show.html.erb
