@@ -1,9 +1,21 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Name:</b>
+  <b>Artist:</b>
   <%= @artist.name %>
 </p>
+
+<% if not @artist.songs.empty? %>
+
+<ul>
+
+  <% @artist.songs.each do |song| %>
+  <li><%= link_to song.name, artist_song_path(song.artist, song) %> (<%= link_to song.genre.name, genre_path(song.genre) %>)</li>
+  <% end %>
+
+</ul>
+
+<% end %>
 
 
 <%= link_to 'Edit', edit_artist_path(@artist) %> |
